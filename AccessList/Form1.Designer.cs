@@ -102,6 +102,8 @@
             this.buttonClearFBUPath = new System.Windows.Forms.Button();
             this.buttonClearHorizontal = new System.Windows.Forms.Button();
             this.buttonClearRoleAccess = new System.Windows.Forms.Button();
+            this.labelVersion = new System.Windows.Forms.Label();
+            this.checkBoxParentFBU = new System.Windows.Forms.CheckBox();
             this.tabControlSystems.SuspendLayout();
             this.ED.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewED)).BeginInit();
@@ -536,6 +538,7 @@
             // 
             // Settings
             // 
+            this.Settings.Controls.Add(this.labelVersion);
             this.Settings.Controls.Add(this.numericUpDownConTimeout);
             this.Settings.Controls.Add(this.label37);
             this.Settings.Controls.Add(this.checkBoxActiveFBU);
@@ -830,7 +833,7 @@
             // 
             this.checkBoxAudit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxAudit.AutoSize = true;
-            this.checkBoxAudit.Location = new System.Drawing.Point(347, 33);
+            this.checkBoxAudit.Location = new System.Drawing.Point(347, 36);
             this.checkBoxAudit.Name = "checkBoxAudit";
             this.checkBoxAudit.Size = new System.Drawing.Size(87, 17);
             this.checkBoxAudit.TabIndex = 54;
@@ -922,11 +925,32 @@
             this.buttonClearRoleAccess.UseVisualStyleBackColor = false;
             this.buttonClearRoleAccess.Click += new System.EventHandler(this.buttonClearRoleAccess_Click);
             // 
+            // labelVersion
+            // 
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.Location = new System.Drawing.Point(697, 24);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(42, 13);
+            this.labelVersion.TabIndex = 37;
+            this.labelVersion.Text = "Version";
+            // 
+            // checkBoxParentFBU
+            // 
+            this.checkBoxParentFBU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxParentFBU.AutoSize = true;
+            this.checkBoxParentFBU.Location = new System.Drawing.Point(347, 58);
+            this.checkBoxParentFBU.Name = "checkBoxParentFBU";
+            this.checkBoxParentFBU.Size = new System.Drawing.Size(130, 17);
+            this.checkBoxParentFBU.TabIndex = 62;
+            this.checkBoxParentFBU.Text = "Access to parent FBU";
+            this.checkBoxParentFBU.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(886, 477);
+            this.Controls.Add(this.checkBoxParentFBU);
             this.Controls.Add(this.buttonClearRoleAccess);
             this.Controls.Add(this.buttonClearHorizontal);
             this.Controls.Add(this.buttonClearFBUPath);
@@ -1057,6 +1081,8 @@
         private System.Windows.Forms.Button buttonClearFBUTree;
         private System.Windows.Forms.NumericUpDown numericUpDownConTimeout;
         private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.CheckBox checkBoxParentFBU;
     }
 }
 

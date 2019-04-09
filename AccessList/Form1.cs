@@ -118,7 +118,7 @@ namespace AccessList
             checkBoxLT.Checked = true;
             checkBoxLH.Checked = true;
 
-            dateTimePickerOldTree.Value = new DateTime(2018, 03, 30);
+            dateTimePickerOldTree.Value = new DateTime(2019, 03, 30);
             dateTimePickerOldTree.Format = DateTimePickerFormat.Custom;
             dateTimePickerOldTree.CustomFormat = "yyyy.MM.dd";
 
@@ -134,6 +134,15 @@ namespace AccessList
             checkBoxActiveFBU.Checked = true;
 
             numericUpDownConTimeout.Value = 300;
+
+            labelVersion.Text = "Version 0.1.1";
+
+            /*
+             * v0.1.1
+             * 1. version added
+             * 2. tree date updated
+             * 3. access to parent FBU added
+             */
         }
 
         private void buttonGenerateCurrentData_Click(object sender, EventArgs e)
@@ -167,17 +176,24 @@ namespace AccessList
             string Condition = "";
             string ConditionActive = "";
             string SQLRequestData = "";
+            string FBUTable = "BusinessUnit";
+            string FBUAncestorTable = "BusinessUnitAncestorLink";
+            string DBName = "EnterpriseDirectories";
 
             switch (SystemName)
             {
                 case "ED":
-                    SQLRequestData = SQLQueriesTemplates.SQLEDAccess();
+                    SQLRequestData = SQLQueriesTemplates.SQLEDAccess();                    
                     break;
                 case "TRM":
                     SQLRequestData = SQLQueriesTemplates.SQLTRMAccess();
+                    FBUTable = "FinancialBusinessUnit";
+                    FBUAncestorTable = "FinancialBusinessUnitAncestorLink";
+                    DBName = "TRMSys";
                     break;
                 case "Invoicing":
                     SQLRequestData = SQLQueriesTemplates.SQLInvoicingAccess();
+                    DBName = "Invoicing";
                     break;
                 case "FBUManager":
                     SQLRequestData = SQLQueriesTemplates.SQLCurrentFBUManager();
@@ -188,7 +204,7 @@ namespace AccessList
                 case "FBUVersion":
                     SQLRequestData = SQLQueriesTemplates.SQLFBUVersionSearch();
                     break;
-            }
+            }            
 
             //FBUSearch
             if (SystemName == "FBUTree")
@@ -249,7 +265,7 @@ namespace AccessList
 
                 SQLRequestData = SQLRequestData.Replace("#Condition", Condition);
                 return SQLRequestData;
-            }
+            }           
 
             //all other
             if (textBoxPrincipalAccess.Text != "")
@@ -260,13 +276,26 @@ namespace AccessList
                 }
                 Condition = Condition + "Login like '%" + textBoxPrincipalAccess.Text + "%'";
             }
+            
             if (textBoxFBUAccess.Text != "")
             {
                 if (Condition != "")
                 {
                     Condition = Condition + " and ";
                 }
-                Condition = Condition + "BU = '" + textBoxFBUAccess.Text + "'";
+                if (checkBoxParentFBU.Checked)
+                {
+                    string SQLFBUParentFilter = SQLQueriesTemplates.SQLFBUParentFilter();
+                    SQLFBUParentFilter = SQLFBUParentFilter.Replace("#ConditionFBU", textBoxFBUAccess.Text);
+                    SQLFBUParentFilter = SQLFBUParentFilter.Replace("#BusinessUnitTableName", FBUTable);
+                    SQLFBUParentFilter = SQLFBUParentFilter.Replace("#BusinessUnitAncestorTableName", FBUAncestorTable);
+                    SQLFBUParentFilter = SQLFBUParentFilter.Replace("#DBName", DBName);
+                    
+                    Condition = Condition + "BU in (" + SQLFBUParentFilter + ")";
+                }
+                else {
+                    Condition = Condition + "BU = '" + textBoxFBUAccess.Text + "'";
+                }                
             }
             if (textBoxFBUPath.Text != "")
             {
@@ -474,8 +503,7 @@ namespace AccessList
                     InitialCatalog = "EnterpriseDirectories";
                     DataGridViewToUpdate = dataGridViewFBUVersion;
                     break;
-            }
-
+            }            
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection("Data Source=" + DataSource + ";Initial Catalog=" + InitialCatalog + ";Integrated Security=True");
             SqlDataAdapter da = new SqlDataAdapter();
@@ -824,11 +852,14 @@ namespace AccessList
             if (TabPageName == "ED" || TabPageName == "TRM" || TabPageName == "Invoicing" || TabPageName == "FBUManager" || TabPageName == "Settings")
             {
                 checkBoxAudit.Enabled = true;
+                checkBoxParentFBU.Enabled = true;
             }
             else
             {
                 checkBoxAudit.Checked = false;
                 checkBoxAudit.Enabled = false;
+                checkBoxParentFBU.Checked = false;
+                checkBoxParentFBU.Enabled = false;
             }
 
             if (TabPageName == "Settings")

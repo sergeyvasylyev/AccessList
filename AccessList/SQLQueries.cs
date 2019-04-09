@@ -617,5 +617,16 @@ SELECT
                     FROM [app].[BusinessUnitVersion]  
                     where  name like '#Condition%')";
         }
+
+        public static string SQLFBUParentFilter() {
+            return @" SELECT 
+		  ParentBU.name as ParentBU
+      FROM 
+      #DBName.[app].#BusinessUnitTableName as BusinessUnit
+	  left join #DBName.[app].#BusinessUnitAncestorTableName as BusinessUnitAncestorLink on BusinessUnitAncestorLink.childId = BusinessUnit.id
+	  left join #DBName.[app].#BusinessUnitTableName as ParentBU on ParentBU.id = BusinessUnitAncestorLink.ancestorId
+      where 
+    BusinessUnit.name like '%#ConditionFBU%' ";
+        }
     }
 }
