@@ -57,62 +57,20 @@ namespace AccessList
             comboBoxInvoicingSQLConnetction.Items.Add(config.AppSettings.Settings["INVPred"].Value);
             comboBoxInvoicingSQLConnetction.Items.Add(config.AppSettings.Settings["INVTest"].Value);
             comboBoxInvoicingSQLConnetction.SelectedIndex = 0;
+            
+            int LTRolesCount = Convert.ToInt32(config.AppSettings.Settings["LTRoles_count"].Value);
+            for (int i = 1; i <= LTRolesCount; i++)
+            listBoxLT.Items.Add(config.AppSettings.Settings["LTRoles_" + i.ToString("D2")].Value);
+
+            int LHRolesCount = Convert.ToInt32(config.AppSettings.Settings["LHRoles_count"].Value);
+            for (int i = 1; i <= LHRolesCount; i++)
+            listBoxLH.Items.Add(config.AppSettings.Settings["LHRoles_" + i.ToString("D2")].Value);
+
+            int EDRolesCount = Convert.ToInt32(config.AppSettings.Settings["EDRoles_count"].Value);
+            for (int i = 1; i <= EDRolesCount; i++)
+            listBoxED.Items.Add(config.AppSettings.Settings["EDRoles_" + i.ToString("D2")].Value);
 
             this.Text = "Access list";
-
-            listBoxLT.Items.Add("LuxTravel Administrator");
-            listBoxLT.Items.Add("LuxTravel Bookkeeper");
-            listBoxLT.Items.Add("LuxTravel BTD");
-            listBoxLT.Items.Add("LuxTravel BTD Director");
-            listBoxLT.Items.Add("Luxtravel BTDReportViewer");
-            listBoxLT.Items.Add("LuxTravel DocumentsViewer");
-            listBoxLT.Items.Add("Luxtravel ExtendedApprove");
-            listBoxLT.Items.Add("LuxTravel Frontdesk");
-            listBoxLT.Items.Add("LuxTravel Internal Control Director");
-            listBoxLT.Items.Add("LuxTravel SE Approver");
-            listBoxLT.Items.Add("LuxTravel SE Manager");
-            listBoxLT.Items.Add("LuxTravel Bulk Export");
-
-            listBoxLH.Items.Add("HrSysDeliveryManager");
-            listBoxLH.Items.Add("HrSysDeliveryManagerWithSalaryAndVacancyView");
-            listBoxLH.Items.Add("HrSysDeliveryManagerWithSalaryView");
-            listBoxLH.Items.Add("HrSysLocationManager");
-
-            listBoxED.Items.Add("Administration-Maintance Department");
-            listBoxED.Items.Add("Administrator");
-            listBoxED.Items.Add("BUChangeBOConfirm");
-            listBoxED.Items.Add("CognosViewer");
-            listBoxED.Items.Add("Commission Distribution Editor");
-            listBoxED.Items.Add("ED Support Specialist");
-            listBoxED.Items.Add("EmployeeAndWorkplaceReportNotification");
-            listBoxED.Items.Add("FBUTreeViewer");
-            listBoxED.Items.Add("FBUViewer");
-            listBoxED.Items.Add("Fin Project Confirmer");
-            listBoxED.Items.Add("FinManager");
-            listBoxED.Items.Add("HR Inspector");
-            listBoxED.Items.Add("HRD");
-            listBoxED.Items.Add("IT Controller");
-            listBoxED.Items.Add("L3 Support Specialist");
-            listBoxED.Items.Add("Lawyer");
-            listBoxED.Items.Add("MBU SEManager");
-            listBoxED.Items.Add("MBUReportViewer");
-            listBoxED.Items.Add("MBUViewer");
-            listBoxED.Items.Add("Methodology Specialist");
-            listBoxED.Items.Add("OPR Manager");
-            listBoxED.Items.Add("Permission Administrator");
-            listBoxED.Items.Add("Project Administrator");
-            listBoxED.Items.Add("Project Manager");
-            listBoxED.Items.Add("Project Viewer");
-            listBoxED.Items.Add("SE Manager");
-            listBoxED.Items.Add("Secretariat");
-            listBoxED.Items.Add("SecretariatNotification");
-            listBoxED.Items.Add("Security Officer");
-            listBoxED.Items.Add("System Administrator");
-            listBoxED.Items.Add("SystemIntegration");
-            listBoxED.Items.Add("Value Sets Team");
-            listBoxED.Items.Add("Viewer");
-            listBoxED.Items.Add("Workplace Viewer");
-
 
             checkBoxRoleED.Checked = true;
             checkBoxLT.Checked = true;
@@ -142,6 +100,7 @@ namespace AccessList
              * 1. version added
              * 2. tree date updated
              * 3. access to parent FBU added
+             * 4. move roles to appSettings.config
              */
         }
 
